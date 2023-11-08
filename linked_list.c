@@ -227,7 +227,6 @@ void search() {
         if(flag)
             printf("Key: %d found at position: %d\n", key, pos);
         else 
-            printf("Key not found in the linked list\n");
-        
+            printf("Key not found in the linked list\n");    
     }
 }
