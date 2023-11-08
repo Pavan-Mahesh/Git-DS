@@ -214,19 +214,16 @@ void search() {
         printf("\nEnter the key: ");
         scanf("%d", &key);
         Node * temp = head;
-        int flag=0, pos, i=1;
+        int flag=0, pos=1;
         while(temp != NULL) {
             if(temp->data == key) {
-                flag = 1;
-                pos = i;
-                break;
+                printf("Key: %d found at position: %d\n", key, pos);
+                flag=1;
             }
             temp = temp->link;
-            i++;
+            pos++;
         }
-        if(flag)
-            printf("Key: %d found at position: %d\n", key, pos);
-        else 
-            printf("Key not found in the linked list\n");    
+        if(!flag)
+            printf("Key not found in the queue\n");    
     }
 }
