@@ -215,7 +215,7 @@ void search() {
         scanf("%d", &key);
         Node * temp = head;
         int flag=0, pos, i=1;
-        while(temp->link != NULL) {
+        while(temp != NULL) {
             if(temp->data == key) {
                 flag = 1;
                 pos = i;
