@@ -8,6 +8,7 @@ int isfull();
 void push();
 void pop();
 void display();
+void search();
 
 int stack[100], top=-1, num;
 
@@ -18,7 +19,7 @@ int main() {
     int ch;
     while(1) {
         printf("\nStack Operations: ");
-        printf("\n1. push\n2. pop\n3. display\n4. exit");
+        printf("\n1. push\n2. pop\n3. display\n4. search\n5. exit");
         printf("\nEnter your choice: ");
         scanf("%d", &ch);
 
@@ -32,7 +33,10 @@ int main() {
             case 3:
                 display();
                 break;
-            case 4: 
+            case 4:
+                search();
+                break;
+            case 5: 
                 printf("\nExited\n");
                 exit(0);
                 break;
@@ -93,5 +97,27 @@ void display() {
                 printf("- ");
         }
         printf("\n");
+    }
+}
+
+void search() {
+    if(isempty())
+        printf("\nThere are no elements in the stack\n");
+    else {
+        int key;
+        printf("\nEnter the key value: ");
+        scanf("%d", &key);
+        int flag=0, pos;
+        for(int i=0; i<=top; i++) {
+            if(stack[i] == key) {
+                flag = 1;
+                pos = i;
+                break;
+            }
+        }
+        if(flag)
+            printf("Key: %d found at position: %d\n", key, pos+1);
+        else 
+            printf("Key not found in the stack\n");
     }
 }

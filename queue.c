@@ -8,6 +8,7 @@ int isfull();
 void insert();
 void dele();
 void display();
+void search();
 
 int queue[100], rear=-1, front=-1, num;
 
@@ -18,7 +19,7 @@ int main() {
     int ch;
     while(1) {
         printf("\nQueue Operations: ");
-        printf("\n1. insert\n2. delete\n3. display\n4. exit");
+        printf("\n1. insert\n2. delete\n3. display\n4. search\n5. exit");
         printf("\nEnter your choice: ");
         scanf("%d", &ch);
 
@@ -32,7 +33,10 @@ int main() {
             case 3:
                 display();
                 break;
-            case 4: 
+            case 4:
+                search();
+                break;
+            case 5: 
                 printf("\nExited\n");
                 exit(0);
                 break;
@@ -84,7 +88,7 @@ void dele() {
 
 void display() {
     if(isempty())
-        printf("\nThere is no elements in the queue.\n");
+        printf("\nThere are no elements in the queue\n");
     else {
         printf("\nThe elements in the queue are: \n");
         for(int i=0; i<=rear; i++) {
@@ -94,5 +98,27 @@ void display() {
                 printf("%d ", queue[i]); 
         }
         printf("\n");
+    }
+}
+
+void search() {
+    if(isempty())
+        printf("\nThere are no elements in the queue\n");
+    else {
+        int key;
+        printf("\nEnter the key value: ");
+        scanf("%d", &key);
+        int flag=0, pos;
+        for(int i=front+1; i<=rear; i++) {
+            if(queue[i] == key) {
+                flag = 1;
+                pos = i;
+                break;
+            }
+        }
+        if(flag)
+            printf("Key: %d found at position: %d\n", key, pos+1);
+        else 
+            printf("Key not found in the queue\n");
     }
 }
