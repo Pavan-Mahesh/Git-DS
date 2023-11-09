@@ -66,7 +66,7 @@ void push() {
         printf("\nStack is full, cannot perform push operation.\n");
     else {
         int x;
-        printf("\nEnter the element: ");
+        printf("\nEnter value: ");
         scanf("%d", &x);
         top++;
         stack[top] = x;
@@ -81,7 +81,7 @@ void pop() {
         int x;
         x = stack[top];
         top--;
-        printf("\nPoped element: %d.\n", x);
+        printf("\nPoped value: %d.\n", x);
     }
 }
 

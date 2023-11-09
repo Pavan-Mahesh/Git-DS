@@ -66,7 +66,7 @@ void insert() {
         printf("\nQueue is full, cannot insert element.\n");
     else {
         int x;
-        printf("\nEnter the element: ");
+        printf("\nEnter value: ");
         scanf("%d", &x);
         rear++;
         queue[rear] = x;
@@ -82,7 +82,7 @@ void dele() {
         int x = queue[front];
         if(front == rear)
             front = rear = -1;
-        printf("\nDeleted element: %d\n", x);
+        printf("\nDeleted value: %d\n", x);
     }
 }
 

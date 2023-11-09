@@ -55,6 +55,7 @@ void push() {
     new->data = x;
     new->link = top;
     top = new;
+    printf("Node inserted\n");
 }
 
 void pop() {
@@ -63,7 +64,7 @@ void pop() {
     else {
         Node * temp = top;
         top = temp->link;
-        printf("\nPoped element: %d\n", temp->data);
+        printf("\nPoped value: %d\n", temp->data);
         free(temp);
     }
 }
@@ -75,7 +76,7 @@ void display() {
         Node * temp = top;
         printf("\nThe elements in the stack are: \n");
         while(temp != NULL) {
-            printf("%d ", temp->data);
+            printf("%d --> ", temp->data);
             temp = temp->link;
         }
         printf("\n");

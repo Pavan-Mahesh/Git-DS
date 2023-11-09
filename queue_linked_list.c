@@ -56,10 +56,7 @@ void insert() {
     if(rear == NULL)
         rear = front = new;
     else {
-        Node * temp = front;
-        while(temp->link != NULL) {
-            temp = temp->link;
-        }
+        Node * temp = rear;
         temp->link = new;
         rear = new;
     }
@@ -69,7 +66,7 @@ void insert() {
 void dele() {
     Node * temp = front;
     front = front->link;
-    printf("\nDeleted element: %d\n", temp->data);
+    printf("\nDeleted value: %d\n", temp->data);
     free(temp);
     if(front == NULL)
         rear = NULL;
@@ -82,7 +79,7 @@ void display() {
         Node * temp = front;
         printf("\nThe elements in the queue are: \n");
         while(temp != NULL) {
-            printf("%d ", temp->data);
+            printf("%d --> ", temp->data);
             temp = temp->link;
         }
         printf("\n");

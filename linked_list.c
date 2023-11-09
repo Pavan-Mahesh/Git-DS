@@ -133,7 +133,7 @@ void deleteAtBegin() {
     else {
         Node * temp = head;
         head = temp->link;
-        printf("\nDeleted element: %d\n", temp->data);
+        printf("\nDeleted value: %d\n", temp->data);
         free(temp);
     }
 }
@@ -152,7 +152,7 @@ void deleteAtEnd() {
                 prev = prev->link;
             }
             prev->link = NULL;
-            printf("\nDeleted element: %d\n", temp->data);
+            printf("\nDeleted value: %d\n", temp->data);
             free(temp);
         }
     }
@@ -184,7 +184,7 @@ void deleteAtPosition() {
                 prev = prev->link;
             }
             prev->link = temp->link;
-            printf("\nDeleted element: %d\n", temp->data);
+            printf("\nDeleted value: %d\n", temp->data);
             free(temp);
         } else {
             printf("Cannot delete node at the given position\n");
@@ -199,7 +199,7 @@ void display() {
         Node * temp = head;
         printf("\nThe elements in the linked list are: \n");
         while(temp != NULL) {
-            printf("%d ", temp->data);
+            printf("%d --> ", temp->data);
             temp = temp->link;
         }
         printf("\n");
