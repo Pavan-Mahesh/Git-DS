@@ -234,6 +234,6 @@ void search() {
             pos++;
         } while(temp != head);
         if(!flag)
-            printf("Key element not found");
+            printf("Key element not found\n");
     }
 }
