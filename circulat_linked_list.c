@@ -69,15 +69,13 @@ int main() {
 int length() {
     if(head == NULL)
         return 0;
-    else {
-        int count = 1;
-        Node * temp = head;
-        while(temp->link != head) {
-            temp = temp->link;
-            count++;
-        }
-        return count;
+    int count = 1;
+    Node * temp = head;
+    while(temp->link != head) {
+        temp = temp->link;
+        count++;
     }
+    return count;
 }
 
 void insertAtBegin() {
