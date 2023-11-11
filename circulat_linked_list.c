@@ -69,8 +69,8 @@ int main() {
 int length() {
     if(head == NULL)
         return 0;
-    int count = 1;
     Node * temp = head;
+    int count = 1;
     while(temp->link != head) {
         temp = temp->link;
         count++;
