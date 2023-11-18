@@ -79,7 +79,7 @@ int length() {
 }
 
 void insertAtBegin() {
-    Node * new = (Node *)malloc(sizeof(Node));
+    Node * new = (Node * )malloc(sizeof(Node));
     printf("\nEnter the value: ");
     scanf("%d", &new->data);
     new->link = head;
@@ -102,7 +102,7 @@ void insertAtEnd() {
         Node * temp = head;
         while(temp->link != head)
             temp = temp->link;
-        Node * new = (Node *)malloc(sizeof(Node));
+        Node * new = (Node * )malloc(sizeof(Node));
         printf("\nEnter the value: ");
         scanf("%d", &new->data);
         new->link = head;
@@ -124,7 +124,7 @@ void insertAtPosition() {
         Node * temp = head;
         for(int i=1; i<(pos-1); i++) 
             temp = temp->link;
-        Node * new = (Node *)malloc(sizeof(Node));
+        Node * new = (Node * )malloc(sizeof(Node));
         printf("\nEnter the value: ");
         scanf("%d", &new->data);
         new->link = temp->link;
