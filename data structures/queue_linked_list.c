@@ -65,11 +65,14 @@ void insert() {
 
 void dele() {
     Node * temp = front;
+    if(front == NULL){
+        printf("\nNo elements in the queue\n");
+        rear = NULL;
+        return;
+    }
     front = front->link;
     printf("\nDeleted value: %d\n", temp->data);
     free(temp);
-    if(front == NULL)
-        rear = NULL;
 }
 
 void display() {
