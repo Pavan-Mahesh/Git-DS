@@ -48,11 +48,9 @@ int main() {
 }
 
 void push() {
-    int x;
-    printf("\nEnter the element: ");
-    scanf("%d", &x);
     Node * new = (Node *)malloc(sizeof(Node));
-    new->data = x;
+    printf("\nEnter the element: ");
+    scanf("%d", &new->data);
     new->link = top;
     top = new;
     printf("Node inserted\n");
@@ -63,7 +61,7 @@ void pop() {
         printf("\nStack is empty, cannot perform pop operation.\n");
     else {
         Node * temp = top;
-        top = temp->link;
+        top = top->link;
         printf("\nPoped value: %d\n", temp->data);
         free(temp);
     }
@@ -85,7 +83,7 @@ void display() {
 
 void search() {
     if(top==NULL)
-        printf("\nNo elements in the queue\n");
+        printf("\nNo elements in the stack\n");
     else {
         int key;
         printf("\nEnter the key: ");
@@ -101,6 +99,6 @@ void search() {
             pos++;
         }
         if(!flag)
-            printf("Key not found in the queue\n");
+            printf("Key not found in the stack\n");
     }
 }
