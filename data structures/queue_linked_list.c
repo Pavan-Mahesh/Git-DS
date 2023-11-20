@@ -60,7 +60,7 @@ void insert() {
 }
 
 void dele() {
-    if(front == NULL)
+    if(rear == NULL)
         printf("\nQueue is empty\n");
     else {
         Node * temp = front;
