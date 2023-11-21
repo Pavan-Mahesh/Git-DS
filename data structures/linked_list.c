@@ -88,13 +88,13 @@ void insertAtEnd() {
     if(head == NULL)
         insertAtBegin();
     else {
-        int x;
-        printf("\nEnter value: ");
-        scanf("%d", &x);
         Node * temp = head;
         while(temp->link != NULL) {
             temp = temp->link;
         }
+        int x;
+        printf("\nEnter value: ");
+        scanf("%d", &x);
         Node * new = createNode(x, NULL);
         temp->link = new;
         printf("Node inserted\n");
@@ -103,28 +103,28 @@ void insertAtEnd() {
 }
 
 void insertAtPosition() {
-    int p;
+    int pos;
     printf("\nEnter the position: ");
-    scanf("%d", &p);
-    if(p<=0 || p>(count+1))
+    scanf("%d", &pos);
+    if(pos<=0 || pos>(count+1))
         printf("Cannot insert node at the given position\n");
     else{
-        if(p==1)
+        if(pos==1)
             insertAtBegin();
-        else if(p==(count+1)) 
+        else if(pos==(count+1)) 
             insertAtEnd();
         else {
+            Node * temp = head;
+            for(int i=1; i<(pos-1); i++)
+                temp = temp->link;
             int x;
             printf("\nEnter value: ");
             scanf("%d", &x);
-            Node * temp = head;
-            for(int i=1; i<(p-1); i++)
-                temp = temp->link;
             Node * new = createNode(x, temp->link);
             temp->link = new;
             printf("Node inserted\n");
+            count++;
         }
-        count++;
     }
 }
 
@@ -165,20 +165,20 @@ void deleteAtPosition() {
     if(head==NULL)
         printf("\nLinked list is empty, cannot perform delete operation.\n");
     else {
-        int p;
+        int pos;
         printf("\nEnter the position: ");
-        scanf("%d", &p);
-        if(p<=0 || p>count)
+        scanf("%d", &pos);
+        if(pos<=0 || pos>count)
             printf("Cannot delete node at the given position\n");
         else {
-            if(p==1)
+            if(pos==1)
                 deleteAtBegin();
-            else if(p==count)
+            else if(pos==count)
                 deleteAtEnd();
             else {
                 Node * prev = head;
                 Node * temp = head->link;
-                for(int i=2; i<p; i++) {
+                for(int i=2; i<pos; i++) {
                     temp = temp->link;
                     prev = prev->link;
                 }
@@ -198,7 +198,7 @@ void display() {
         Node * temp = head;
         printf("\nThe elements in the linked list are: \n");
         while(temp != NULL) {
-            printf("%d --> ", temp->data);
+            printf("%d ", temp->data);
             temp = temp->link;
         }
         printf("\n");
