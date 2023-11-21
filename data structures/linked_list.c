@@ -3,6 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct node {
+    int data;
+    struct node * link;
+}Node;
+
+Node * head = NULL;
+int count = 0;
+
+Node * createNode(int d, Node * l);
 void insertAtBegin();
 void insertAtEnd();
 void insertAtPosition();
@@ -11,13 +20,6 @@ void deleteAtEnd();
 void deleteAtPosition();
 void display();
 void search();
-
-typedef struct node {
-    int data;
-    struct node * link;
-}Node;
-
-Node * head = NULL;
 
 int main() {
     int ch;
@@ -65,15 +67,21 @@ int main() {
     return 0;
 }
 
+Node * createNode(int d, Node * l) {
+    Node * new = (Node * )malloc(sizeof(Node));
+    new->data = d;
+    new->link = l;
+    return new;
+}
+
 void insertAtBegin() {
     int x;
     printf("\nEnter value: ");
     scanf("%d", &x);
-    Node * new = (Node *)malloc(sizeof(Node));
-    new->data = x;
-    new->link = head;
+    Node * new = createNode(x, head);
     head = new;
     printf("Node inserted\n");
+    count++;
 }
 
 void insertAtEnd() {
@@ -83,47 +91,40 @@ void insertAtEnd() {
         int x;
         printf("\nEnter value: ");
         scanf("%d", &x);
-        Node * new = (Node *)malloc(sizeof(Node));
-        new->data = x;
-        new->link = NULL;
         Node * temp = head;
         while(temp->link != NULL) {
             temp = temp->link;
         }
+        Node * new = createNode(x, NULL);
         temp->link = new;
         printf("Node inserted\n");
+        count++;
     }
 }
 
 void insertAtPosition() {
-    Node * temp = head;
-    int count = 1;
-    while(temp->link != NULL) {
-        temp = temp->link;
-        count++; 
-    }
     int p;
     printf("\nEnter the position: ");
     scanf("%d", &p);
-
-    if(p==1)
-        insertAtBegin();
-    else if(p==(count+1))
-        insertAtEnd();
-    else if(p>1 && p<(count+1)) {
-        int x;
-        printf("\nEnter value: ");
-        scanf("%d", &x);
-        Node * new = (Node *)malloc(sizeof(Node));
-        new->data = x;
-        temp = head;
-        for(int i=1; i<(p-1); i++)
-            temp = temp->link;
-        new->link = temp->link;
-        temp->link = new;
-        printf("Node inserted\n");
-    } else {
+    if(p<=0 || p>(count+1))
         printf("Cannot insert node at the given position\n");
+    else{
+        if(p==1)
+            insertAtBegin();
+        else if(p==(count+1)) 
+            insertAtEnd();
+        else {
+            int x;
+            printf("\nEnter value: ");
+            scanf("%d", &x);
+            Node * temp = head;
+            for(int i=1; i<(p-1); i++)
+                temp = temp->link;
+            Node * new = createNode(x, temp->link);
+            temp->link = new;
+            printf("Node inserted\n");
+        }
+        count++;
     }
 }
 
@@ -135,6 +136,7 @@ void deleteAtBegin() {
         head = temp->link;
         printf("\nDeleted value: %d\n", temp->data);
         free(temp);
+        count--;
     }
 }
 
@@ -154,6 +156,7 @@ void deleteAtEnd() {
             prev->link = NULL;
             printf("\nDeleted value: %d\n", temp->data);
             free(temp);
+            count--;
         }
     }
 }
@@ -162,32 +165,28 @@ void deleteAtPosition() {
     if(head==NULL)
         printf("\nLinked list is empty, cannot perform delete operation.\n");
     else {
-        Node * temp = head;
-        int count = 1;
-        while(temp->link != NULL) {
-            temp = temp->link;
-            count++;
-        }
         int p;
         printf("\nEnter the position: ");
         scanf("%d", &p);
-
-        if(p==1) {
-            deleteAtBegin();
-        } else if(p==count) {
-            deleteAtEnd();
-        } else if(p>1 && p<count) {
-            Node * prev = head;
-            temp = head->link;
-            for(int i=2; i<p; i++) {
-                temp = temp->link;
-                prev = prev->link;
-            }
-            prev->link = temp->link;
-            printf("\nDeleted value: %d\n", temp->data);
-            free(temp);
-        } else {
+        if(p<=0 || p>count)
             printf("Cannot delete node at the given position\n");
+        else {
+            if(p==1)
+                deleteAtBegin();
+            else if(p==count)
+                deleteAtEnd();
+            else {
+                Node * prev = head;
+                Node * temp = head->link;
+                for(int i=2; i<p; i++) {
+                    temp = temp->link;
+                    prev = prev->link;
+                }
+                prev->link = temp->link;
+                printf("\nDeleted value: %d\n", temp->data);
+                free(temp);
+                count--;
+            }
         }
     }
 }
@@ -214,16 +213,16 @@ void search() {
         printf("\nEnter the key: ");
         scanf("%d", &key);
         Node * temp = head;
-        int flag=0, pos=1;
+        int flag=1, pos=1;
         while(temp != NULL) {
             if(temp->data == key) {
-                printf("Key: %d found at position: %d\n", key, pos);
-                flag=1;
+                printf("Found at position: %d\n", pos);
+                flag=0;
             }
             temp = temp->link;
             pos++;
         }
-        if(!flag)
+        if(flag)
             printf("Key not found in the queue\n");    
     }
 }
