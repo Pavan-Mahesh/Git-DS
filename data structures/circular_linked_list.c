@@ -3,6 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct node {
+    int data;
+    struct node * link;
+}Node;
+
+Node * head = NULL;
+int count = 0;
+
+Node * createNode(int d, Node * l);
 void insertAtBegin();
 void insertAtEnd();
 void insertAtPosition();
@@ -11,14 +20,6 @@ void deleteAtEnd();
 void deleteAtPosition();
 void display();
 void search();
-int length();
-
-typedef struct node {
-    int data;
-    struct node * link;
-}Node;
-
-Node * head = NULL;
 
 int main() {
     int ch;
@@ -66,23 +67,18 @@ int main() {
     return 0;
 }
 
-int length() {
-    if(head == NULL)
-        return 0;
-    Node * temp = head;
-    int count = 1;
-    while(temp->link != head) {
-        temp = temp->link;
-        count++;
-    }
-    return count;
+Node * createNode(int d, Node * l) {
+    Node * new = (Node * )malloc(sizeof(Node));
+    new->data = d;
+    new->link = l;
+    return new;
 }
 
 void insertAtBegin() {
-    Node * new = (Node *)malloc(sizeof(Node));
+    int x;
     printf("\nEnter the value: ");
-    scanf("%d", &new->data);
-    new->link = head;
+    scanf("%d", &x);
+    Node * new = createNode(x, head);
     head = new;
     if(new->link == NULL)
         new->link = head;
@@ -93,6 +89,7 @@ void insertAtBegin() {
         temp->link = head;
     }
     printf("Node inserted\n");
+    count++;
 }
 
 void insertAtEnd() {
@@ -102,36 +99,40 @@ void insertAtEnd() {
         Node * temp = head;
         while(temp->link != head)
             temp = temp->link;
-        Node * new = (Node *)malloc(sizeof(Node));
+        int x;
         printf("\nEnter the value: ");
-        scanf("%d", &new->data);
-        new->link = head;
+        scanf("%d", &x);
+        Node * new = createNode(x, head);
         temp->link = new;
         printf("Node inserted\n");
+        count++;
     }
 }
 
 void insertAtPosition() {
-    int count = length();
     int pos;
     printf("\nEnter the position: ");
     scanf("%d", &pos);
-    if(pos == 1) 
-        insertAtBegin();
-    else if(pos == (count+1))
-        insertAtEnd();
-    else if(pos>1 && pos<=count) {
-        Node * temp = head;
-        for(int i=1; i<(pos-1); i++) 
-            temp = temp->link;
-        Node * new = (Node *)malloc(sizeof(Node));
-        printf("\nEnter the value: ");
-        scanf("%d", &new->data);
-        new->link = temp->link;
-        temp->link = new;
-        printf("Node inserted\n");
-    } else 
-        printf("Cannot insert at the given position\n");
+    if(pos<=0 || pos>(count+1))
+        printf("Cannot insert at the given location\n");
+    else {
+        if(pos == 1) 
+            insertAtBegin();
+        else if(pos == (count+1))
+            insertAtEnd();
+        else {
+            Node * temp = head;
+            for(int i=1; i<(pos-1); i++) 
+                temp = temp->link;
+            int x;
+            printf("\nEnter the value: ");
+            scanf("%d", &x);
+            Node * new = createNode(x, temp->link);
+            temp->link = new;
+            printf("Node inserted\n");
+            count++;
+        }
+    }
 }
 
 void deleteAtBegin() {
@@ -150,6 +151,7 @@ void deleteAtBegin() {
         }
         printf("\nDeleted value: %d\n", temp->data);
         free(temp);
+        count--;
     }
 }
 
@@ -169,6 +171,7 @@ void deleteAtEnd() {
             prev->link = head;
             printf("\nDeleted value: %d\n", temp->data);
             free(temp);
+            count--;
         }
     }
 }
@@ -177,26 +180,29 @@ void deleteAtPosition() {
     if(head == NULL) 
         printf("\nCircular linked list is empty\n");
     else {
-        int count = length();
         int pos;
         printf("\nEnter the position: ");
         scanf("%d", &pos);
-        if(pos == 1)
-            deleteAtBegin();
-        else if(pos == count)
-            deleteAtEnd();
-        else if(pos>1 && pos<count) {
-            Node * prev = head;
-            Node * temp = head->link;
-            for(int i=2; i<pos; i++) {
-                temp = temp->link;
-                prev = prev->link;
+        if(pos<=0 || pos>count)
+            printf("Cannot delete at the given position\n");
+        else {
+            if(pos == 1)
+                deleteAtBegin();
+            else if(pos == count)
+                deleteAtEnd();
+            else if(pos>1 && pos<count) {
+                Node * prev = head;
+                Node * temp = head->link;
+                for(int i=2; i<pos; i++) {
+                    temp = temp->link;
+                    prev = prev->link;
+                }
+                prev->link = temp->link;
+                printf("Deleted value: %d\n", temp->data);
+                free(temp);
+                count--;
             }
-            prev->link = temp->link;
-            printf("Deleted value: %d\n", temp->data);
-            free(temp);
-        } else 
-        printf("Cannot delete at the given position\n");
+        }
     }
 }
 
@@ -207,7 +213,7 @@ void display() {
         Node * temp = head;
         printf("\nElements in the linked list are: \n");
         do {
-            printf("%d --> ", temp->data);
+            printf("%d ", temp->data);
             temp = temp->link;
         } while(temp != head);
         printf("\n");

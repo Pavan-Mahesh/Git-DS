@@ -47,32 +47,29 @@ int main() {
 }
 
 void insert() {
-    int x;
-    printf("\nEnter value: ");
-    scanf("%d", &x);
     Node * new = (Node *)malloc(sizeof(Node));
-    new->data = x;
+    printf("\nEnter value: ");
+    scanf("%d", &new->data);
     new->link = NULL;
-    if(rear == NULL)
-        rear = front = new;
-    else {
-        Node * temp = rear;
-        temp->link = new;
-        rear = new;
-    }
+    if(rear != NULL)
+        rear->link = new;
+    rear = new;
+    if(front == NULL)
+        front = new;
     printf("Node inserted\n");
 }
 
 void dele() {
-    Node * temp = front;
-    if(front == NULL){
-        printf("\nNo elements in the queue\n");
-        rear = NULL;
-        return;
+    if(rear == NULL)
+        printf("\nQueue is empty\n");
+    else {
+        Node * temp = front;
+        front = front->link;
+        if(front == NULL)
+            rear = NULL;
+        printf("\nDeleted value: %d\n", temp->data);
+        free(temp);
     }
-    front = front->link;
-    printf("\nDeleted value: %d\n", temp->data);
-    free(temp);
 }
 
 void display() {

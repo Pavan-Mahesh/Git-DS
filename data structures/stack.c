@@ -48,17 +48,11 @@ int main() {
 }
 
 int isempty() {
-    if(top == -1)
-        return 1;
-    else
-        return 0; 
+    return (top == -1);
 }
 
 int isfull() {
-    if(top == (num-1))
-        return 1;
-    else
-        return 0; 
+    return(top == (num-1));
 }
 
 void push() {
@@ -107,17 +101,14 @@ void search() {
         int key;
         printf("\nEnter the key value: ");
         scanf("%d", &key);
-        int flag=0, pos;
+        int flag=0;
         for(int i=0; i<=top; i++) {
             if(stack[i] == key) {
+                printf("Key: %d found at position: %d\n", key, i+1);
                 flag = 1;
-                pos = i;
-                break;
             }
         }
-        if(flag)
-            printf("Key: %d found at position: %d\n", key, pos+1);
-        else 
+        if(!flag)
             printf("Key not found in the stack\n");
     }
 }

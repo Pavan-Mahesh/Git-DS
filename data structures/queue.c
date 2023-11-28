@@ -48,17 +48,11 @@ int main() {
 }
 
 int isempty() {
-    if(rear == -1)
-        return 1;
-    else
-        return 0;
+    return (rear == -1);
 }
 
 int isfull() {
-    if(rear == (num-1))
-        return 1;
-    else
-        return 0;
+    return (rear == (num-1));
 }
 
 void insert() {
@@ -108,17 +102,14 @@ void search() {
         int key;
         printf("\nEnter the key value: ");
         scanf("%d", &key);
-        int flag=0, pos;
+        int flag=0;
         for(int i=front+1; i<=rear; i++) {
             if(queue[i] == key) {
+                printf("Key: %d found at position: %d\n", key, i+1);
                 flag = 1;
-                pos = i;
-                break;
             }
         }
-        if(flag)
-            printf("Key: %d found at position: %d\n", key, pos+1);
-        else 
+        if(!flag)
             printf("Key not found in the queue\n");
     }
 }
