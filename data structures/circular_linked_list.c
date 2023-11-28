@@ -3,241 +3,225 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node {
+struct node {
     int data;
     struct node * link;
-}Node;
+};
 
-Node * head = NULL;
+struct node * head = NULL;
 int count = 0;
 
-Node * createNode(int d, Node * l);
-void insertAtBegin();
-void insertAtEnd();
-void insertAtPosition();
+void insertAtBegin(int x);
+void insertAtEnd(int x);
+void insertAtPosition(int x, int pos);
 void deleteAtBegin();
 void deleteAtEnd();
-void deleteAtPosition();
+void deleteAtPosition(int pos);
 void display();
-void search();
+void search(int key);
 
 int main() {
-    int ch;
-    while(1) {
-        printf("\nCircular linked list operations: ");
-        printf("\n1. insert at begin\n2. insert at end\n3. insert at position");
-        printf("\n4. delete at begin\n5. delete at end\n6. delete at position");
-        printf("\n7. display\n8. search\n9. exit");
-        printf("\nEnter your choice: ");
-        scanf("%d", &ch);
+    printf("\nInsert at the beginning: ");
+    insertAtBegin(70);
+    insertAtBegin(120);
+    insertAtBegin(90);
+    display();
 
-        switch (ch) {
-        case 1:
-            insertAtBegin();
-            break;
-        case 2:
-            insertAtEnd();
-            break;
-        case 3:
-            insertAtPosition();
-            break;
-        case 4:
-            deleteAtBegin();
-            break;
-        case 5:
-            deleteAtEnd();
-            break;
-        case 6:
-            deleteAtPosition();
-            break;
-        case 7:
-            display();
-            break;
-        case 8:
-            search();
-            break;
-        case 9:
-            printf("\nExited\n");
-            exit(0);
-            break;
-        default:
-            printf("\nInvalid choice, try again.\n");
-        }
-    }
+    printf("\nInsert at the end: ");
+    insertAtEnd(60);
+    insertAtEnd(45);
+    insertAtEnd(105);
+    display();
+
+    printf("\nInsert at a given position: ");
+    insertAtPosition(30, 2);
+    insertAtPosition(85, 5);
+    insertAtPosition(50, 7);
+    display();
+
+    search(90);
+    search(115);
+
+    printf("\nDelete at the beginning: ");
+    deleteAtBegin();
+    deleteAtBegin();
+    display();
+
+    printf("\nDelete at the end: ");
+    deleteAtEnd();
+    deleteAtEnd();
+    display();
+
+    printf("\nDelete at a given position: ");
+    deleteAtPosition(4);
+    deleteAtPosition(2);
+    display();
+
     return 0;
 }
 
-Node * createNode(int d, Node * l) {
-    Node * new = (Node * )malloc(sizeof(Node));
-    new->data = d;
-    new->link = l;
-    return new;
-}
-
-void insertAtBegin() {
-    int x;
-    printf("\nEnter the value: ");
-    scanf("%d", &x);
-    Node * new = createNode(x, head);
+void insertAtBegin(int x) {
+    struct node * new; 
+    new = (struct node * )malloc(sizeof(struct node));
+    new->data = x;
+    new->link = head;
     head = new;
     if(new->link == NULL)
         new->link = head;
     else {
-        Node * temp = new->link;
+        struct node * temp = new->link;
         while(temp->link != new->link) 
             temp = temp->link;
         temp->link = head;
     }
-    printf("Node inserted\n");
+    printf("\nAdded: %d at the begin", x);
     count++;
 }
 
-void insertAtEnd() {
+void insertAtEnd(int x) {
     if(head == NULL) 
-        insertAtBegin();
+        insertAtBegin(x);
     else {
-        Node * temp = head;
+        struct node * temp = head;
         while(temp->link != head)
             temp = temp->link;
-        int x;
-        printf("\nEnter the value: ");
-        scanf("%d", &x);
-        Node * new = createNode(x, head);
+        struct node * new;
+        new = (struct node * )malloc(sizeof(struct node));
+        new->data = x;
+        new->link = head;
         temp->link = new;
-        printf("Node inserted\n");
+        printf("\nAdded: %d at the end", x);
         count++;
     }
 }
 
-void insertAtPosition() {
-    int pos;
-    printf("\nEnter the position: ");
-    scanf("%d", &pos);
-    if(pos<=0 || pos>(count+1))
-        printf("Cannot insert at the given location\n");
+void insertAtPosition(int x, int pos) {
+    if(pos<=0 || pos>(count+1)) {
+        printf("Cannot insert at the given location");
+        return;
+    }
+    if(pos == 1) 
+        insertAtBegin(x);
+    else if(pos == (count+1))
+        insertAtEnd(x);
     else {
-        if(pos == 1) 
-            insertAtBegin();
-        else if(pos == (count+1))
-            insertAtEnd();
-        else {
-            Node * temp = head;
-            for(int i=1; i<(pos-1); i++) 
-                temp = temp->link;
-            int x;
-            printf("\nEnter the value: ");
-            scanf("%d", &x);
-            Node * new = createNode(x, temp->link);
-            temp->link = new;
-            printf("Node inserted\n");
-            count++;
-        }
+        struct node * temp = head;
+        for(int i=1; i<(pos-1); i++) 
+            temp = temp->link;
+        struct node * new;
+        new = (struct node * )malloc(sizeof(struct node));
+        new->data = x;
+        new->link = temp->link;
+        temp->link = new;
+        printf("\nAdded: %d at position %d", x, pos);
+        count++;
     }
 }
 
 void deleteAtBegin() {
-    if(head == NULL) 
+    if(head == NULL) {
         printf("\nCircular linked list is empty\n");
+        return;
+    }
+
+    struct node * temp = head;
+    if(head->link == head)
+        head = NULL;
     else {
-        Node * temp = head;
-        if(head->link == head)
-            head = NULL;
-        else {
-            while(temp->link != head) 
-                temp = temp->link;
-            temp->link = head->link;
-            temp = head;
-            head = head->link;
+        while(temp->link != head) 
+            temp = temp->link;
+        temp->link = head->link;
+        temp = head;
+        head = head->link;
+    }
+    printf("\nDeleted: %d at the begin", temp->data);
+    free(temp);
+    count--;
+}
+
+void deleteAtEnd() {
+    if(head == NULL) {
+        printf("\nCircular linked list is empty\n");
+        return;
+    }
+
+    if(head->link == head) 
+        deleteAtBegin();
+    else {
+        struct node * prev = head;
+        struct node * temp = head->link;
+        while(temp->link != head) {
+            temp = temp->link;
+            prev = prev->link;
         }
-        printf("\nDeleted value: %d\n", temp->data);
+        prev->link = head;
+        printf("\nDeleted: %d at the end", temp->data);
         free(temp);
         count--;
     }
 }
 
-void deleteAtEnd() {
-    if(head == NULL)
-        printf("\nCircular linked list is empty\n");
-    else {
-        if(head->link == head) 
-            deleteAtBegin();
-        else {
-            Node * prev = head;
-            Node * temp = head->link;
-            while(temp->link != head) {
-                temp = temp->link;
-                prev = prev->link;
-            }
-            prev->link = head;
-            printf("\nDeleted value: %d\n", temp->data);
-            free(temp);
-            count--;
-        }
+void deleteAtPosition(int pos) {
+    if(head == NULL) {
+        printf("\nCircular linked list is empty");
+        return;
     }
-}
 
-void deleteAtPosition() {
-    if(head == NULL) 
-        printf("\nCircular linked list is empty\n");
-    else {
-        int pos;
-        printf("\nEnter the position: ");
-        scanf("%d", &pos);
-        if(pos<=0 || pos>count)
-            printf("Cannot delete at the given position\n");
-        else {
-            if(pos == 1)
-                deleteAtBegin();
-            else if(pos == count)
-                deleteAtEnd();
-            else if(pos>1 && pos<count) {
-                Node * prev = head;
-                Node * temp = head->link;
-                for(int i=2; i<pos; i++) {
-                    temp = temp->link;
-                    prev = prev->link;
-                }
-                prev->link = temp->link;
-                printf("Deleted value: %d\n", temp->data);
-                free(temp);
-                count--;
-            }
+    if(pos<=0 || pos>count) {
+        printf("Cannot delete at the given position");
+        return;
+    }
+    if(pos == 1)
+        deleteAtBegin();
+    else if(pos == count)
+        deleteAtEnd();
+    else if(pos>1 && pos<count) {
+        struct node * prev = head;
+        struct node * temp = head->link;
+        for(int i=2; i<pos; i++) {
+            temp = temp->link;
+            prev = prev->link;
         }
+        prev->link = temp->link;
+        printf("\nDeleted: %d at position %d", temp->data, pos);
+        free(temp);
+        count--;
     }
 }
 
 void display() {
-    if(head == NULL)
+    if(head == NULL) {
         printf("\nNo elements in the linked list\n");
-    else {
-        Node * temp = head;
-        printf("\nElements in the linked list are: \n");
-        do {
-            printf("%d ", temp->data);
-            temp = temp->link;
-        } while(temp != head);
-        printf("\n");
+        return;
     }
+    
+    struct node * temp = head;
+    printf("\nElements in the linked list are: \n");
+    do {
+        printf("%d ", temp->data);
+        temp = temp->link;
+    } while(temp != head);
+    printf("\n");
 }
 
-void search() {
-    if(head == NULL)
+void search(int key) {
+    if(head == NULL) {
         printf("\nNo elements in the linked list\n");
-    else {
-        int key;
-        printf("\nEnter the key: ");
-        scanf("%d", &key);
-        Node * temp = head;
-        int flag=0, pos=1;
-        do {
-            if(temp->data == key) {
-                printf("Found at position: %d\n", pos);
-                flag = 1;
-            }
-            temp = temp->link;
-            pos++;
-        } while(temp != head);
-        if(!flag)
-            printf("Key element not found\n");
+        return;
     }
+
+    struct node * temp = head;
+    int flag=1, pos=1;
+    printf("\nSearching %d: \n", key);
+    do {
+        if(temp->data == key) {
+            printf("Found at position: %d", pos);
+            flag = 0;
+        }
+        temp = temp->link;
+        pos++;
+    } while(temp != head);
+    if(flag)
+        printf("Key not found");
+    printf("\n");
 }
