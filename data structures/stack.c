@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int isempty();
-int isfull();
 void push();
 void pop();
 void display();
@@ -47,68 +45,60 @@ int main() {
     return 0;
 }
 
-int isempty() {
-    return (top == -1);
-}
-
-int isfull() {
-    return(top == (num-1));
-}
-
 void push() {
-    if(isfull())
-        printf("\nStack is full, cannot perform push operation.\n");
+    if(top == (num-1))
+        printf("\nStack is full\n");
     else {
         int x;
         printf("\nEnter value: ");
         scanf("%d", &x);
         top++;
         stack[top] = x;
-        printf("Element inserted\n");
+        printf("\nPushed\n");
     }
 }
 
 void pop() {
-    if(isempty())
-        printf("\nStack is empty, cannot perform pop operation.\n");
+    if(top == 0)
+        printf("\nStack is empty\n");
     else {
         int x;
         x = stack[top];
         top--;
-        printf("\nPoped value: %d.\n", x);
+        printf("\nPoped %d\n", x);
     }
 }
 
 void display() {
-    if(isempty())
+    if(top == 0) {
         printf("\nThere are no elements in the stack.\n");
-    else {
-        printf("\nThe elements in the stack are: \n");
-        for(int i=0; i<num; i++) {
-            if(i <= top)
-                printf("%d ", stack[i]);
-            else
-                printf("- ");
-        }
-        printf("\n");
+        return;
     }
+    printf("\nElements in the stack are: \n");
+    for(int i=0; i<num; i++) {
+        if(i <= top)
+            printf("%d ", stack[i]);
+        else
+            printf("- ");
+    }
+    printf("\n");
 }
 
 void search() {
-    if(isempty())
+    if(top == 0) {
         printf("\nThere are no elements in the stack\n");
-    else {
-        int key;
-        printf("\nEnter the key value: ");
-        scanf("%d", &key);
-        int flag=0;
-        for(int i=0; i<=top; i++) {
-            if(stack[i] == key) {
-                printf("Key: %d found at position: %d\n", key, i+1);
-                flag = 1;
-            }
-        }
-        if(!flag)
-            printf("Key not found in the stack\n");
+        return;
     }
+    int key;
+    printf("\nEnter the key value: ");
+    scanf("%d", &key);
+    int flag=1;
+    for(int i=0; i<=top; i++) {
+        if(stack[i] == key) {
+            printf("Found at position: %d\n", i+1);
+            flag = 0;
+        }
+    }
+    if(flag)
+        printf("Key not found\n");
 }

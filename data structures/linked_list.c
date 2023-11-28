@@ -21,19 +21,16 @@ void display();
 void search(int key);
 
 int main() {
-    printf("\nInsert at the beginning: ");
     insertAtBegin(10);
     insertAtBegin(20);
     insertAtBegin(30);
     display();
 
-    printf("\nInsert at the end: ");
     insertAtEnd(40);
     insertAtEnd(50);
     insertAtEnd(60);
     display();
 
-    printf("\nInsert at a given position: ");
     insertAtPosition(35, 2);
     insertAtPosition(0, 5);
     insertAtPosition(65, 7);
@@ -42,17 +39,14 @@ int main() {
     search(40);
     search(75);
 
-    printf("\nDelete at the begin: ");
     deleteAtBegin();
     deleteAtBegin();
     display();
 
-    printf("\nDelete at the end: ");
     deleteAtEnd();
     deleteAtEnd();
     display();
 
-    printf("\nDelete at a given position: ");
     deleteAtPosition(4);
     deleteAtPosition(2);
     display();
@@ -66,7 +60,7 @@ void insertAtBegin(int x) {
     new->data = x;
     new->link = head;
     head = new;
-    printf("\nAdded: %d at the begin", x);
+    printf("\nInserted %d at the beginning", x);
     count++;
 }
 
@@ -83,14 +77,14 @@ void insertAtEnd(int x) {
         new->data = x;
         new->link = NULL;
         temp->link = new;
-        printf("\nAdded: %d at the end", x);
+        printf("\nInserted %d at the end", x);
         count++;
     }
 }
 
 void insertAtPosition(int x, int pos) {
     if(pos<=0 || pos>(count+1)) {
-        printf("Cannot insert node at the given position");
+        printf("Invalid position, insertion not possible");
         return;
     }
     if(pos == 1)
@@ -106,7 +100,7 @@ void insertAtPosition(int x, int pos) {
         new->data = x;
         new->link = temp->link;
         temp->link = new;
-        printf("\nAdded: %d at position %d", x, pos);
+        printf("\nInserted %d at position %d", x, pos);
         count++;
     }
 }
@@ -119,7 +113,7 @@ void deleteAtBegin() {
 
     struct node * temp = head;
     head = temp->link;
-    printf("\nDeleted: %d at the begin", temp->data);
+    printf("\nDeleted %d from the beginning", temp->data);
     free(temp);
     count--;
 }
@@ -140,7 +134,7 @@ void deleteAtEnd() {
             prev = prev->link;
         }
         prev->link = NULL;
-        printf("\nDeleted: %d at the end", temp->data);
+        printf("\nDeleted %d from the end", temp->data);
         free(temp);
         count--;
     }
@@ -153,7 +147,7 @@ void deleteAtPosition(int pos) {
     }
 
     if(pos<=0 || pos>count) {
-        printf("Cannot delete node at the given position");
+        printf("Invalid position, deletion not possible");
         return;
     }
     if(pos == 1)
@@ -168,7 +162,7 @@ void deleteAtPosition(int pos) {
             prev = prev->link;
         }
         prev->link = temp->link;
-        printf("\nDeleted: %d at position %d", temp->data, pos);
+        printf("\nDeleted %d from position %d", temp->data, pos);
         free(temp);
         count--;
     }
@@ -181,9 +175,10 @@ void display() {
     }
 
     struct node * temp = head;
-    printf("\nThe elements in the linked list are: \n");
+    printf("\nElements in the linked list are: \n");
+    printf("head");
     while(temp != NULL) {
-        printf("%d ", temp->data);
+        printf(" --> %d", temp->data);
         temp = temp->link;
     }
     printf("\n");

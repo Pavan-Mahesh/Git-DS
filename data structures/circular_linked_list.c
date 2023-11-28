@@ -21,19 +21,16 @@ void display();
 void search(int key);
 
 int main() {
-    printf("\nInsert at the beginning: ");
     insertAtBegin(70);
     insertAtBegin(120);
     insertAtBegin(90);
     display();
 
-    printf("\nInsert at the end: ");
     insertAtEnd(60);
     insertAtEnd(45);
     insertAtEnd(105);
     display();
 
-    printf("\nInsert at a given position: ");
     insertAtPosition(30, 2);
     insertAtPosition(85, 5);
     insertAtPosition(50, 7);
@@ -42,17 +39,14 @@ int main() {
     search(90);
     search(115);
 
-    printf("\nDelete at the beginning: ");
     deleteAtBegin();
     deleteAtBegin();
     display();
 
-    printf("\nDelete at the end: ");
     deleteAtEnd();
     deleteAtEnd();
     display();
 
-    printf("\nDelete at a given position: ");
     deleteAtPosition(4);
     deleteAtPosition(2);
     display();
@@ -74,7 +68,7 @@ void insertAtBegin(int x) {
             temp = temp->link;
         temp->link = head;
     }
-    printf("\nAdded: %d at the begin", x);
+    printf("\nInserted %d at the beginnig", x);
     count++;
 }
 
@@ -90,14 +84,14 @@ void insertAtEnd(int x) {
         new->data = x;
         new->link = head;
         temp->link = new;
-        printf("\nAdded: %d at the end", x);
+        printf("\nInserted %d at the end", x);
         count++;
     }
 }
 
 void insertAtPosition(int x, int pos) {
     if(pos<=0 || pos>(count+1)) {
-        printf("Cannot insert at the given location");
+        printf("\nInvalid position, insertion not possible");
         return;
     }
     if(pos == 1) 
@@ -113,14 +107,14 @@ void insertAtPosition(int x, int pos) {
         new->data = x;
         new->link = temp->link;
         temp->link = new;
-        printf("\nAdded: %d at position %d", x, pos);
+        printf("\nInserted %d at position %d", x, pos);
         count++;
     }
 }
 
 void deleteAtBegin() {
     if(head == NULL) {
-        printf("\nCircular linked list is empty\n");
+        printf("\nCircular linked list is empty");
         return;
     }
 
@@ -134,14 +128,14 @@ void deleteAtBegin() {
         temp = head;
         head = head->link;
     }
-    printf("\nDeleted: %d at the begin", temp->data);
+    printf("\nDeleted %d from the beginning", temp->data);
     free(temp);
     count--;
 }
 
 void deleteAtEnd() {
     if(head == NULL) {
-        printf("\nCircular linked list is empty\n");
+        printf("\nCircular linked list is empty");
         return;
     }
 
@@ -155,7 +149,7 @@ void deleteAtEnd() {
             prev = prev->link;
         }
         prev->link = head;
-        printf("\nDeleted: %d at the end", temp->data);
+        printf("\nDeleted %d from the end", temp->data);
         free(temp);
         count--;
     }
@@ -168,7 +162,7 @@ void deleteAtPosition(int pos) {
     }
 
     if(pos<=0 || pos>count) {
-        printf("Cannot delete at the given position");
+        printf("\nInvalid position, deletion not possible");
         return;
     }
     if(pos == 1)
@@ -183,7 +177,7 @@ void deleteAtPosition(int pos) {
             prev = prev->link;
         }
         prev->link = temp->link;
-        printf("\nDeleted: %d at position %d", temp->data, pos);
+        printf("\nDeleted %d from position %d", temp->data, pos);
         free(temp);
         count--;
     }
@@ -191,22 +185,24 @@ void deleteAtPosition(int pos) {
 
 void display() {
     if(head == NULL) {
-        printf("\nNo elements in the linked list\n");
+        printf("\nNo elements in the circular linked list");
         return;
     }
     
     struct node * temp = head;
-    printf("\nElements in the linked list are: \n");
+    printf("\nElements in the circular linked list are: \n");
+    printf("head --> ");
     do {
-        printf("%d ", temp->data);
+        printf("%d --> ", temp->data);
         temp = temp->link;
     } while(temp != head);
+    printf("head");
     printf("\n");
 }
 
 void search(int key) {
     if(head == NULL) {
-        printf("\nNo elements in the linked list\n");
+        printf("\nNo elements in the circular linked list\n");
         return;
     }
 

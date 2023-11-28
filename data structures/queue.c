@@ -3,8 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int isempty();
-int isfull();
 void insert();
 void dele();
 void display();
@@ -47,69 +45,64 @@ int main() {
     return 0;
 }
 
-int isempty() {
-    return (rear == -1);
-}
-
-int isfull() {
-    return (rear == (num-1));
-}
-
 void insert() {
-    if(isfull())
-        printf("\nQueue is full, cannot insert element.\n");
-    else {
-        int x;
-        printf("\nEnter value: ");
-        scanf("%d", &x);
-        rear++;
-        queue[rear] = x;
-        printf("Element inserted\n");
+    if(rear == (num-1)) {
+        printf("\nQueue is full\n");
+        return;
     }
+
+    int x;
+    printf("\nEnter value: ");
+    scanf("%d", &x);
+    rear++;
+    queue[rear] = x;
+    printf("Inserted\n");
 }
 
 void dele() {
-    if(isempty())
+    if(rear == -1) {
         printf("\nQueue is empty, cannot delete element.\n");
-    else {
-        front++;
-        int x = queue[front];
-        if(front == rear)
-            front = rear = -1;
-        printf("\nDeleted value: %d\n", x);
+        return;
     }
+
+    front++;
+    int x = queue[front];
+    if(front == rear)
+        front = rear = -1;
+    printf("\nDeleted %d\n", x);
 }
 
 void display() {
-    if(isempty())
+    if(rear == -1) {
         printf("\nThere are no elements in the queue\n");
-    else {
-        printf("\nThe elements in the queue are: \n");
-        for(int i=0; i<=rear; i++) {
-            if(i<=front)
-                printf("- ");
-            else
-                printf("%d ", queue[i]); 
-        }
-        printf("\n");
+        return;
     }
+
+    printf("\nThe elements in the queue are: \n");
+    for(int i=0; i<=rear; i++) {
+        if(i<=front)
+            printf("- ");
+        else
+            printf("%d ", queue[i]); 
+    }
+    printf("\n");
 }
 
 void search() {
-    if(isempty())
+    if(rear == -1) {
         printf("\nThere are no elements in the queue\n");
-    else {
-        int key;
-        printf("\nEnter the key value: ");
-        scanf("%d", &key);
-        int flag=0;
-        for(int i=front+1; i<=rear; i++) {
-            if(queue[i] == key) {
-                printf("Key: %d found at position: %d\n", key, i+1);
-                flag = 1;
-            }
-        }
-        if(!flag)
-            printf("Key not found in the queue\n");
+        return;
     }
+    int key;
+    printf("\nEnter the key value: ");
+    scanf("%d", &key);
+    int flag=1;
+    for(int i=front+1; i<=rear; i++) {
+        if(queue[i] == key) {
+            printf("Found at position: %d\n", i+1);
+            flag = 0;
+        }
+    }
+    if(flag)
+        printf("Key not found in the queue\n");
 }

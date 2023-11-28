@@ -3,17 +3,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void push();
-void pop();
-void display();
-void search();
-
 typedef struct Node {
     int data;
     struct Node * link;
 }Node;
 
 Node * top = NULL;
+
+void push();
+void pop();
+void display();
+void search();
 
 int main() {
     int ch;
@@ -53,52 +53,56 @@ void push() {
     scanf("%d", &new->data);
     new->link = top;
     top = new;
-    printf("Node inserted\n");
+    printf("Pushed\n");
 }
 
 void pop() {
-    if(top==NULL)
+    if(top == NULL) {
         printf("\nStack is empty, cannot perform pop operation.\n");
-    else {
-        Node * temp = top;
-        top = top->link;
-        printf("\nPoped value: %d\n", temp->data);
-        free(temp);
+        return;
     }
+
+    Node * temp = top;
+    top = top->link;
+    printf("\nPoped %d\n", temp->data);
+    free(temp);
 }
 
 void display() {
-    if(top == NULL)
+    if(top == NULL) {
         printf("\nNo elements in the stack\n");
-    else {
-        Node * temp = top;
-        printf("\nThe elements in the stack are: \n");
-        while(temp != NULL) {
-            printf("%d --> ", temp->data);
-            temp = temp->link;
-        }
-        printf("\n");
+        return;
     }
+
+    Node * temp = top;
+    printf("\nElements in the stack are: \n");
+    printf("top");
+    while(temp != NULL) {
+        printf(" --> %d", temp->data);
+        temp = temp->link;
+    }
+    printf("\n");
 }
 
 void search() {
-    if(top==NULL)
+    if(top==NULL) {
         printf("\nNo elements in the stack\n");
-    else {
-        int key;
-        printf("\nEnter the key: ");
-        scanf("%d", &key);
-        Node * temp = top;
-        int flag=0, pos=1;
-        while(temp != NULL) {
-            if(temp->data == key) {
-                printf("Key: %d found at position: %d\n", key, pos);
-                flag=1;
-            }
-            temp = temp->link;
-            pos++;
-        }
-        if(!flag)
-            printf("Key not found in the stack\n");
+        return;
     }
+
+    int key;
+    printf("\nEnter the key: ");
+    scanf("%d", &key);
+    Node * temp = top;
+    int flag=1, pos=1;
+    while(temp != NULL) {
+        if(temp->data == key) {
+            printf("Found at position: %d\n", pos);
+            flag=0;
+        }
+        temp = temp->link;
+        pos++;
+    }
+    if(flag)
+        printf("Key not found\n");
 }

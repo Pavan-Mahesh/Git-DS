@@ -1,11 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void insert();
-void dele();
-void display();
-void search();
-
 typedef struct node {
     int data;
     struct node * link;
@@ -13,6 +8,11 @@ typedef struct node {
 
 Node * rear = NULL;
 Node * front = NULL;
+
+void insert();
+void dele();
+void display();
+void search();
 
 int main() {
     int ch;
@@ -56,54 +56,59 @@ void insert() {
     rear = new;
     if(front == NULL)
         front = new;
-    printf("Node inserted\n");
+    printf("Inserted\n", new->data);
 }
 
 void dele() {
-    if(rear == NULL)
+    if(rear == NULL) {
         printf("\nQueue is empty\n");
-    else {
-        Node * temp = front;
-        front = front->link;
-        if(front == NULL)
-            rear = NULL;
-        printf("\nDeleted value: %d\n", temp->data);
-        free(temp);
+        return;
     }
+
+    Node * temp = front;
+    front = front->link;
+    if(front == NULL)
+        rear = NULL;
+    printf("\nDeleted %d\n", temp->data);
+    free(temp);
 }
 
 void display() {
-    if(rear == NULL)
+    if(rear == NULL) {
         printf("\nNo elements in the queue\n");
-    else {
-        Node * temp = front;
-        printf("\nThe elements in the queue are: \n");
-        while(temp != NULL) {
-            printf("%d --> ", temp->data);
-            temp = temp->link;
-        }
-        printf("\n");
+        return;
     }
+    
+    Node * temp = front;
+    printf("\nElements in the queue are: \n");
+    printf("front --> ");
+    while(temp != NULL) {
+        printf("%d --> ", temp->data);
+        temp = temp->link;
+    }
+    printf("rear");
+    printf("\n");
 }
 
 void search() {
-    if(rear==NULL)
+    if(rear==NULL) {
         printf("\nNo elements in the queue\n");
-    else {
-        int key;
-        printf("\nEnter the key: ");
-        scanf("%d", &key);
-        Node * temp = front;
-        int flag=0, pos=1;
-        while(temp != NULL) {
-            if(temp->data == key) {
-                printf("Key: %d found at position: %d\n", key, pos);
-                flag=1;
-            }
-            temp = temp->link;
-            pos++;
-        }
-        if(!flag)
-            printf("Key not found in the queue\n");
+        return;
     }
+    
+    int key;
+    printf("\nEnter the key: ");
+    scanf("%d", &key);
+    Node * temp = front;
+    int flag=1, pos=1;
+    while(temp != NULL) {
+        if(temp->data == key) {
+            printf("Found at position: %d\n", pos);
+            flag=0;
+        }
+        temp = temp->link;
+        pos++;
+    }
+    if(flag)
+        printf("Key not found\n");
 }
