@@ -186,9 +186,7 @@ void display() {
         end = start;
         start = start->next;
     }
-    printf("tail");
     printf("\nBackward traversing: \n");
-    printf("tail --> ");
     while(end != NULL) {
         printf("%d --> ", end->data);
         end = end->prev;
