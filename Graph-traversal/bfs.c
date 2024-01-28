@@ -17,6 +17,13 @@ void bfs(int v) {
     }
 }
 
+int bfsPossible() {
+    for(int i=0; i<n; i++)
+        if(!visited[i])
+            return 0;
+    return 1;
+}
+
 int main() {
     printf("Enter number of vertices: ");
     scanf("%d", &n);
@@ -34,14 +41,13 @@ int main() {
     queue[0] = v;
     rear = front = 0;
     visited[v] = 1;
+
+    printf("BFS traversal: \n");
     bfs(v);
 
-    for(int i=0; i<n; i++) {
-        if(!visited[i]) {
-            printf("\nBFS is not possible, all the nodes are not reachable");
-            break;
-        }
-    }
+    if(!bfsPossible)
+        printf("BFS is not possible, all the nodes are not reachable");
+    
     return 0;
 }
 

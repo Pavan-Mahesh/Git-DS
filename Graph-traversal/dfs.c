@@ -11,6 +11,13 @@ void dfs(int v) {
             dfs(i);
 }
 
+int dfsPossible() {
+    for(int i=0; i<n; i++)
+        if(!visited[i])
+            return 0;
+    return 1;
+}
+
 int main() {
     printf("Enter number of vertices: ");
     scanf("%d", &n);
@@ -25,14 +32,12 @@ int main() {
     
     printf("Enter the starting vertex: ");
     scanf("%d", &v);
+
+    printf("DFS traversal: \n");
     dfs(v);
 
-    for(int i=0; i<n; i++) {
-        if(!visited[i]) {
-            printf("\nBFS is not possible, all the nodes are not reachable");
-            break;
-        }
-    }
+    if(!dfsPossible)
+        printf("DFS is not possible, all the nodes are not reachable");    
     return 0;
 }
 
